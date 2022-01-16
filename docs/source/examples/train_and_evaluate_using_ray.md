@@ -100,7 +100,7 @@ import tensortrade.env.default as default
 def create_env(config):
     dataset = pd.read_csv(filepath_or_buffer=config["csv_filename"], parse_dates=['Datetime']).fillna(method='backfill').fillna(method='ffill')
     ttse_commission = 0.0035  # TODO: adjust according to your commission percentage, if present
-    price = Stream.source(list(dataset["close"]), dtype="float").rename("USD-TTRD")
+    price = Stream.source(list(dataset["Close"]), dtype="float").rename("USD-TTRD")
     ttse_options = ExchangeOptions(commission=ttse_commission)
     ttse_exchange = Exchange("TTSE", service=execute_order, options=ttse_options)(price)
 
