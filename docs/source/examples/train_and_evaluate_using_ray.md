@@ -65,7 +65,7 @@ df_training["volume"] = df_training["volume"].astype(int)
 df_training.ta.log_return(append=True, length=16)
 df_training.ta.rsi(append=True, length=14)
 df_training.ta.macd(append=True, fast=12, slow=26)
-df_training.to_csv('training.csv', index=False)
+df_training.to_csv('training.csv', index=True)
 
 df_evaluation = yf_ticker.history(start=EVAL_START_DATE, end=EVAL_END_DATE, interval='60m')
 df_evaluation.drop(['Dividends', 'Stock Splits'], axis=1, inplace=True)
@@ -73,7 +73,7 @@ df_evaluation["volume"] = df_evaluation["volume"].astype(int)
 df_evaluation.ta.log_return(append=True, length=16)
 df_evaluation.ta.rsi(append=True, length=14)
 df_evaluation.ta.macd(append=True, fast=12, slow=26)
-df_evaluation.to_csv('evaluation.csv', index=False)
+df_evaluation.to_csv('evaluation.csv', index=True)
 ```
 We should now have the two preprocessed files ready (`training.csv` and `evaluation.csv`) 
 > Please note that there are many better ways to do this. For example there is an obvious issue in doing things this way: all TA values that we have added require a minimum of 12 samples to be processed, since they perform calculations on longer timeframes. This means that the first 12 rows will not have any meaningful TA values to be trained (or evaluated) with.
